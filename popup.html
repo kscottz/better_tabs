@@ -1,0 +1,28 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+
+    <title>BetterTabs</title>
+    <link href="main.css" rel="stylesheet">
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+     -->
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <form class="filter-area">
+      <input type="text" id="filter" placeholder="search" autofocus></input>
+      <button id="copy-to-clipboard">Copy list to clipboard</button>
+    </form>
+    <div id="list"></div>
+  </body>
+</html>
+
