@@ -74,14 +74,64 @@ const onUpdateFilter = function() {
 
 chrome.tabs.onRemoved.addListener(populateList);
 
+
+const scrubList = function(inputString) {
+    // This map holds the strings to find (keys) and what to replace them with (values).
+    const replacementMap = {
+	" - Open Robotics Discourse": "",
+	" - Robot Operating System / Robot Operating System General":"",
+	" - Gazebo / Gazebo PMC":"",
+	" - Training & Education":"",
+	" - Community Groups / Industrial robotics":"",
+	" - Projects":"",
+	" - Robot Operating System / Packaging and Release Management":"",
+	" - Robot Operating System / Robot Operating System Announcements and News":"",
+	" - TurtleBot":"",
+	" - Robot Operating System / Robot Operating System PMC":"",
+	" - ros-controls / ros-controls Announcements and News":"",
+	" - Robot Operating System / Robot Operating System Ideas":"",
+	" - OSRA Announcements and News":"",
+	" - Infrastructure Project / Buildfarm":"",
+	" - Open-RMF / Open-RMF Ideas":"",
+	" - ROS / ROS Announcements and News":"",
+	" - ROS / ROS Ideas":"",
+	" - The Robot Report":"",
+	" - YouTube":"(Video)",
+	" on Vimeo":"(Video)",
+	" | TechCrunch":"",
+	" | LinkedIn":"",
+	" | MIT Technology Review":"",
+	" - IEEE Spectrum":""
+    };
+
+  let scrubbedString = inputString;
+
+  // Loop through each key-value pair in the map.
+    for (const key in replacementMap) {
+	
+    // Escape any special characters in the key to ensure it's treated as a literal string in the regex.
+    const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    
+    // Create a regular expression to find all instances of the key.
+    // The 'g' flag stands for "global," meaning it will replace all occurrences, not just the first one.
+    const regex = new RegExp(escapedKey, 'g');
+    
+    // Perform the replacement.
+    scrubbedString = scrubbedString.replace(regex, replacementMap[key]);
+  }
+
+  return scrubbedString;
+};
+
 function copyLinksToClipboard() {
-  const queryInfo = { currentWindow: true };
-  chrome.tabs.query(queryInfo, function(tabs){
-    const getMarkdownLink = tab => `* [${tab.title}](${tab.url})`;
-    const markdown = tabs.map(getMarkdownLink).join('\n');
-    // TO-DO: Use try catch to show feedback
-    copyToClipboard(markdown);
-  });
+    const queryInfo = { currentWindow: true };
+    chrome.tabs.query(queryInfo, function(tabs){
+	const getMarkdownLink = tab => `* [${tab.title}](${tab.url})`;
+	const markdown = tabs.map(getMarkdownLink).join('\n');
+	const cleaned = scrubList(markdown);  	
+	// TO-DO: Use try catch to show feedback
+	copyToClipboard(cleaned);
+    });
 }
 
 function populateList(){
