@@ -93,14 +93,17 @@ const scrubList = function(inputString) {
 	" - OSRA Announcements and News":"",
 	" - Infrastructure Project / Buildfarm":"",
 	" - Open-RMF / Open-RMF Ideas":"",
+	" - ros-controls / ros-controls General":"",
 	" - ROS / ROS Announcements and News":"",
 	" - ROS / ROS Ideas":"",
+	" - ROS / ROS General":"",
 	" - The Robot Report":"",
 	" - YouTube":"(Video)",
 	" on Vimeo":"(Video)",
 	" | TechCrunch":"",
 	" | LinkedIn":"",
 	" | MIT Technology Review":"",
+	"Github - ":"",
 	" - IEEE Spectrum":""
     };
 
